@@ -5,6 +5,9 @@ import { Queue } from 'bullmq';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { QdrantVectorStore } from '@langchain/qdrant';
 import OpenAI from 'openai';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const apiKey = process.env.OPENAI_API_KEY;
 
@@ -13,8 +16,8 @@ const client = new OpenAI({
 });
 const queue = new Queue('file-upload-queue', {
   connection: {
-    host: 'localhost',
-    port: '6379',
+    host: process.env.VALKEY_HOST || 'localhost',
+    port: process.env.VALKEY_PORT || '6379',
   },
 });
 
@@ -59,7 +62,7 @@ app.get('/chat', async (req, res) => {
   const vectorStore = await QdrantVectorStore.fromExistingCollection(
     embeddings,
     {
-      url: 'http://localhost:6333',
+      url: process.env.QDRANT_URL || 'http://localhost:6333',
       collectionName: 'langchainjs-testing',
     }
   );

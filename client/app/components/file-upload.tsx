@@ -12,7 +12,7 @@ const FileUploadComponent: React.FC = () => {
     const el = document.createElement('input');
     el.setAttribute('type', 'file');
     el.setAttribute('accept', 'application/pdf');
-    el.addEventListener('change', async (ev) => {
+    el.addEventListener('change', async () => {
       if (el.files && el.files.length > 0) {
         const file = el.files.item(0);
         if (file) {
@@ -28,7 +28,6 @@ const FileUploadComponent: React.FC = () => {
 
     try {
       setIsUploading(true);
-      toast.loading('Uploading file...');
 
       const formData = new FormData();
       formData.append('pdf', selectedFile);

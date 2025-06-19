@@ -2,6 +2,9 @@ import { Worker } from 'bullmq';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { QdrantVectorStore } from '@langchain/qdrant';
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const worker = new Worker(
   'file-upload-queue',
@@ -29,7 +32,7 @@ const worker = new Worker(
     const vectorStore = await QdrantVectorStore.fromExistingCollection(
       embeddings,
       {
-        url: 'http://localhost:6333',
+        url: process.env.QDRANT_URL || 'http://localhost:6333',
         collectionName: 'langchainjs-testing',
       }
     );
@@ -39,8 +42,8 @@ const worker = new Worker(
   {
     concurrency: 100,
     connection: {
-      host: 'localhost',
-      port: '6379',
+      host: process.env.VALKEY_HOST || 'localhost',
+      port: process.env.VALKEY_PORT || '6379',
     },
   }
 );

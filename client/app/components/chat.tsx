@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import * as React from 'react';
 import { toast } from 'sonner';
-import { Send, User, Bot, FileText, Download, BookOpen } from 'lucide-react';
+import { Send, User, Bot, FileText, Download } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 interface Doc {
@@ -26,7 +26,7 @@ const ChatComponent: React.FC = () => {
   const [message, setMessage] = React.useState<string>('');
   const [messages, setMessages] = React.useState<IMessage[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [showSources, setShowSources] = React.useState(true);
+  const [showSources] = React.useState(true);
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
   const chatContainerRef = React.useRef<HTMLDivElement>(null);
 
